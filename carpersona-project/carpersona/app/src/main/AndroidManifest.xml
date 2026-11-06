@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      Pleos 차량 "조회" 권한 (제어 CONTROL_* 권한은 하나도 쓰지 않습니다).
+      공식 샘플 앱과 같은 이름이며, 일반 폰에서는 그냥 무시됩니다.
+    -->
+    <!-- 권한 이름은 공식 문서 "Vehicle 권한" 표 기준 (2026-11-06 확인) -->
+    <uses-permission android:name="pleos.car.permission.CAR_INFO" />      <!-- CarInfo: 차대번호(연식) -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />     <!-- Odometer·DrivingMode: 누적/이번 주행 -->
+    <uses-permission android:name="pleos.car.permission.CAR_ENERGY" />    <!-- EvBattery·Fuel: 배터리·연료 -->
+    <uses-permission android:name="pleos.car.permission.CAR_SAFETY" />    <!-- Safety·Tire: 경고 -->
+    <uses-permission android:name="pleos.car.permission.CAR_CLIMATE" />   <!-- HVAC: 실내 온도 -->
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />   <!-- Wiper: 비 -->
+
+    <!-- NaviHelper: 목적지·도착·현재 위치 (조회) -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />
+
+    <!-- 음성으로 묻기 (안드로이드 기본 음성 인식) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Claude API (AI 대화를 켰을 때만 사용) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@android:drawable/sym_action_chat"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode|density">
+            <!-- 차량(Android Automotive)에서 주행 중에도 띄울 수 있다고 표시.
+                 주행 중에는 글자 입력을 숨기고, 차의 말은 한 문장으로 줄입니다. -->
+            <meta-data android:name="distractionOptimized" android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
