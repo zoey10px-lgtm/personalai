@@ -139,7 +139,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Deprecated("Activity API")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (pendingMic && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
             setup.value?.let { onMic(it.companion) }
